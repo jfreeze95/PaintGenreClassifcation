@@ -122,6 +122,7 @@ def cnn_model_fn(features, labels, mode):
 def main(unused_argv):
 
   f = open('train_files_test.csv', 'r')
+  g = open('test_files_test.csv', 'r')
   #train_data = np.array([])
   #train_labels = np.array([])
   lines = f.readline()
@@ -138,6 +139,8 @@ def main(unused_argv):
   train_data=image
   train_label = labels
   os.chdir('..')
+
+
 
 ##################Training#####################
   for line in f:
@@ -158,13 +161,48 @@ def main(unused_argv):
 
   f.close()
 
+  g = open('test_files_test.csv', 'r')
+
+  lines = g.readline()
+
+  lines = lines.strip()
+  columns = lines.split(',')
+  fname = columns[0]
+  labels = columns[1]
+  os.chdir('test') 
+
+  im=tf.read_file(fname)
+  image = tf.image.decode_image(im)
+  image = tf.image.resize_nearest_neighbor(image,[750,750])
+  eval_data=image
+  eval_labels = labels
+  os.chdir('..')
+
+##################Testing#####################
+  for line in g:
+	line = line.strip()
+	columns = line.split(',')
+	fname = columns[0]
+	labels = columns[1]
+	os.chdir('test') 
+
+	im=tf.read_file(fname)
+	image = tf.image.decode_image(im)
+	image = tf.image.resize_nearest_neighbor(image,[750,750])
+	eval_data=image
+	eval_labels =labels
+
+
+	os.chdir('..')
+
+  f.close()
 		
   # Load training and eval data
   #mnist = tf.contrib.learn.datasets.load_dataset("mnist")
   #train_data = mnist.train.images  # Returns np.array
   #train_labels = np.asarray(mnist.train.labels, dtype=np.int32)
-  eval_data = mnist.test.images  # Returns np.array
-  eval_labels = np.asarray(mnist.test.labels, dtype=np.int32)
+  #eval_data = mnist.test.images  # Returns np.array
+  #eval_labels = np.asarray(mnist.test.labels, dtype=np.int32)
 
   # Create the Estimator
   mnist_classifier = tf.estimator.Estimator(
