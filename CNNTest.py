@@ -137,27 +137,27 @@ def main(unused_argv):
   image = tf.image.decode_image(im)
   image = tf.image.resize_nearest_neighbor(image,[750,750])
   train_data=image
-  train_label = labels
+  train_labels = labels
   os.chdir('..')
 
 
 
 ##################Training#####################
   for line in f:
-	line = line.strip()
-	columns = line.split(',')
-	fname = columns[0]
-	labels = columns[1]
-	os.chdir('train') 
+    line = line.strip()
+    columns = line.split(',')
+    fname = columns[0]
+    labels = columns[1]
+    os.chdir('train') 
 
-	im=tf.read_file(fname)
-	image = tf.image.decode_image(im)
-	image = tf.image.resize_nearest_neighbor(image,[750,750])
-	train_data=image
-	train_label = labels
+    im=tf.read_file(fname)
+    image = tf.image.decode_image(im)
+    image = tf.image.resize_nearest_neighbor(image,[750,750])
+    train_data=image
+    train_label = labels
 
 
-	os.chdir('..')
+    os.chdir('..')
 
   f.close()
 
@@ -180,23 +180,23 @@ def main(unused_argv):
 
 ##################Testing#####################
   for line in g:
-	line = line.strip()
-	columns = line.split(',')
-	fname = columns[0]
-	labels = columns[1]
-	os.chdir('test') 
+    line = line.strip()
+    columns = line.split(',')
+    fname = columns[0]
+    labels = columns[1]
+    os.chdir('test') 
 
-	im=tf.read_file(fname)
-	image = tf.image.decode_image(im)
-	image = tf.image.resize_nearest_neighbor(image,[750,750])
-	eval_data=image
-	eval_labels =labels
+    im=tf.read_file(fname)
+    image = tf.image.decode_image(im)
+    image = tf.image.resize_nearest_neighbor(image,[750,750])
+    eval_data=image
+    eval_labels =labels
 
 
-	os.chdir('..')
+    os.chdir('..')
 
   f.close()
-		
+    
   # Load training and eval data
   #mnist = tf.contrib.learn.datasets.load_dataset("mnist")
   #train_data = mnist.train.images  # Returns np.array
