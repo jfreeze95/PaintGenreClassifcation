@@ -32,7 +32,7 @@ def cnn_model_fn(features, labels, mode):
   # Input Layer
   # Reshape X to 4-D tensor: [batch_size, width, height, channels]
   # MNIST images are 28x28 pixels, and have one color channel
-  input_layer = tf.reshape(features["x"], [-1, 750, 750, 1])
+  input_layer = features["x"]#tf.reshape(features["x"], [-1, 750, 750, 3])
 
   # Convolutional Layer #1
   # Computes 32 features using a 5x5 filter with ReLU activation.
@@ -135,6 +135,7 @@ def main(unused_argv):
 
   im=tf.read_file(fname)
   image = tf.image.decode_image(im)
+  image=tf.cast(image,tf.int32)
   image = tf.image.resize_nearest_neighbor(image,[750,750])
   train_data=image
   train_labels = labels
@@ -152,8 +153,13 @@ def main(unused_argv):
 
     im=tf.read_file(fname)
     image = tf.image.decode_image(im)
+    print(tf.shape(image))
+    image=tf.cast(image,tf.int32)
+    print(tf.shape(image))
     image = tf.image.resize_nearest_neighbor(image,[750,750])
-    train_data=image
+    print(tf.shape(image))
+    print(tf.shape(train_data))
+    train_data=tf.concat(train_data,image,0)
     train_label = labels
 
 
@@ -188,8 +194,9 @@ def main(unused_argv):
 
     im=tf.read_file(fname)
     image = tf.image.decode_image(im)
+    image=tf.cast(image, tf.int32)
     image = tf.image.resize_nearest_neighbor(image,[750,750])
-    eval_data=image
+    eval_data=tf.concat(eval_data,image,0)
     eval_labels =labels
 
 
@@ -218,7 +225,7 @@ def main(unused_argv):
   train_input_fn = tf.estimator.inputs.numpy_input_fn(
       x={"x": train_data},
       y=train_labels,
-      batch_size=100,
+      batch_size=10,
       num_epochs=None,
       shuffle=True)
   mnist_classifier.train(
