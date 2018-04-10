@@ -21,7 +21,7 @@ from keras import backend as K
 import os
 
 batch_size = 128
-num_classes = 10
+num_classes = 18
 epochs = 12
 
 
@@ -163,55 +163,60 @@ def main(unused_argv):
     x_train = tf.cast(x_train, dtype=tf.float32)
     x_test = tf.cast(x_test,dtype=tf.float32)
     
+    print(x_train.eval())
     
-    x_train = sess.run(x_train)
-    print('x trained')
-    x_test = sess.run(x_test)
-    print ('x tested')
-    #with tf.Session() as sess:
+
+
+#     print(x_train)
+#     x_train = sess.run(x_train)
+#     print('x trained')
+#     x_test = sess.run(x_test)
+#     print ('x tested')
+#     #with tf.Session() as sess:
      
     
-    print(type(x_train))
-    #THIS NEEDS TO BE CHANGED
-    x_train /= 255
-    x_test /= 255
-    print('x_train shape:', x_train.shape)
-    print(x_train.shape[0], 'train samples')
-    print(x_test.shape[0], 'test samples')
+#     print(type(x_train))
 
-    # convert class vectors to binary class matrices
-    y_train = keras.utils.to_categorical(y_train, num_classes)
-    y_test = keras.utils.to_categorical(y_test, num_classes)
+#     #THIS NEEDS TO BE CHANGED
+#     x_train /= 255
+#     x_test /= 255
+#     print('x_train shape:', x_train.shape)
+#     print(x_train.shape[0], 'train samples')
+#     print(x_test.shape[0], 'test samples')
 
-    model = Sequential()
-    model.add(Conv2D(32, kernel_size=(3, 3),
-                     activation='relu',
-                     input_shape=input_shape))
-    model.add(Conv2D(64, (3, 3), activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
-    model.add(Flatten())
-    model.add(Dense(128, activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(num_classes, activation='softmax'))
+#     # convert class vectors to binary class matrices
+#     y_train = keras.utils.to_categorical(y_train, num_classes)
+#     y_test = keras.utils.to_categorical(y_test, num_classes)
 
-    model.compile(loss=keras.losses.categorical_crossentropy,
-                  optimizer=keras.optimizers.Adadelta(),
-                  metrics=['accuracy'])
+#     model = Sequential()
+#     model.add(Conv2D(32, kernel_size=(3, 3),
+#                      activation='relu',
+#                      input_shape=input_shape))
+#     model.add(Conv2D(64, (3, 3), activation='relu'))
+#     model.add(MaxPooling2D(pool_size=(2, 2)))
+#     model.add(Dropout(0.25))
+#     model.add(Flatten())
+#     model.add(Dense(128, activation='relu'))
+#     model.add(Dropout(0.5))
+#     model.add(Dense(num_classes, activation='softmax'))
 
-    model.fit(x_train, y_train,
-              batch_size=batch_size,
-              epochs=epochs,
-              verbose=1,
-              validation_data=(x_test, y_test))
-    score = model.evaluate(x_test, y_test, verbose=0)
-    print('Test loss:', score[0])
-    print('Test accuracy:', score[1])
-    f.close()
-    g.close()
+#     model.compile(loss=keras.losses.categorical_crossentropy,
+#                   optimizer=keras.optimizers.Adadelta(),
+#                   metrics=['accuracy'])
+
+#     model.fit(x_train, y_train,
+#               batch_size=batch_size,
+#               epochs=epochs,
+#               verbose=1,
+#               validation_data=(x_test, y_test))
+#     score = model.evaluate(x_test, y_test, verbose=0)
+#     print('Test loss:', score[0])
+#     print('Test accuracy:', score[1])
+#     f.close()
+#     g.close()
     
 if __name__ == "__main__":
-  tf.app.run()
+   tf.app.run()
 
 
 
