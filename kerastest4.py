@@ -47,13 +47,16 @@ def main(unused_argv):
 		train_data_dir,
 		target_size = (img_width,img_height),
 		batch_size = batch_size,
-		class_mode ='binary')
+		class_mode ='categorical')
+
+	print('train_generator')
+	print(train_generator[0])
 
 	validation_generator = test_datagen.flow_from_directory(
 		test_data_dir,
 		target_size = (img_width,img_height),
 		batch_size =batch_size,
-		class_mode ='binary')
+		class_mode ='categorical')
 
 	if K.image_data_format() == 'channels_first':
 		input_shape = (3, img_width,img_height)
@@ -79,12 +82,12 @@ def main(unused_argv):
 	model.add(Dense(128, activation='relu'))
 	model.add(Dropout(0.5))
 	print("5 potato")
-	model.add(Dense(1, activation='softmax'))
+	model.add(Dense(18, activation='softmax'))
 
 	model.compile(loss=keras.losses.binary_crossentropy,
 		optimizer=keras.optimizers.Adadelta(),
 		metrics=['accuracy'])
-
+	print('6 potato')
 	model.fit_generator(
 		train_generator,
 		steps_per_epoch=nb_train_samples // batch_size,
