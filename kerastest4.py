@@ -27,13 +27,15 @@ img_width = 750
 img_height = 750
 batch_size = 1
 num_classes = 18
-epochs = 12
-nb_train_samples = 10
-nb_validation_samples = 10
+epochs = 1
+nb_train_samples = 3
+nb_validation_samples = 4
+#we have 68087 train images
+#we have 20342 test images
 
 def main(unused_argv):
-	train_data_dir = 'train/tests'
-	test_data_dir = 'test/tests'
+	train_data_dir = 'foolingaround/trainfiles'
+	test_data_dir = 'foolingaround/testfiles'
 
 	#can alter these paramemters and many more not included to alter how pictures are read in.
 	train_datagen = ImageDataGenerator(
@@ -49,8 +51,8 @@ def main(unused_argv):
 		batch_size = batch_size,
 		class_mode ='categorical')
 
-	print('train_generator')
-	print(train_generator[0])
+	#print('train_generator')
+	#print(train_generator[0])
 
 	validation_generator = test_datagen.flow_from_directory(
 		test_data_dir,
@@ -74,13 +76,13 @@ def main(unused_argv):
 		activation='relu',
 		input_shape=input_shape))
 	print("3 potato")
-	model.add(Conv2D(64, (3, 3), activation='relu'))
+	#model.add(Conv2D(64, (3, 3), activation='relu'))
 	print("4 potato")
 	model.add(MaxPooling2D(pool_size=(2, 2)))
-	model.add(Dropout(0.25))
+	#model.add(Dropout(0.25))
 	model.add(Flatten())
 	model.add(Dense(128, activation='relu'))
-	model.add(Dropout(0.5))
+	#model.add(Dropout(0.5))
 	print("5 potato")
 	model.add(Dense(18, activation='softmax'))
 
