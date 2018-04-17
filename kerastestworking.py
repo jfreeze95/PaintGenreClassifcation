@@ -28,8 +28,10 @@ img_height = 100
 batch_size = 1
 num_classes = 18
 epochs = 12
-nb_train_samples = 10
-nb_validation_samples = 10
+nb_train_samples = 68087
+nb_validation_samples = 20342
+#68087 train
+#20342 test
 
 def main(unused_argv):
 	train_data_dir = 'train/tests'
