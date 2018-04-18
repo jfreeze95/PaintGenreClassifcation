@@ -86,7 +86,7 @@ def main(unused_argv):
 	print("5 potato")
 	model.add(Dense(18, activation='softmax'))
 
-	model.compile(loss=keras.losses.binary_crossentropy,
+	model.compile(loss=keras.losses.categorical_crossentropy,
 		optimizer=keras.optimizers.Adadelta(),
 		metrics=['accuracy'])
 	print('6 potato')
